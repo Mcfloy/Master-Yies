@@ -1,0 +1,81 @@
+<template name="teamAdviser">
+  <div class="team-adviser step-1">
+    <form class="select-team-region">
+      <label for="teamRegion">Select your region:</label>
+      <select name="teamRegion">
+        <option value="BR">BR</option>
+        <option value="EUNE">EUNE</option>
+        <option value="EUW">EUW</option>
+        <option value="JP">JP</option>
+        <option value="KR">KR</option>
+        <option value="LAN">LAN</option>
+        <option value="LAS">LAS</option>
+        <option value="NA">NA</option>
+        <option value="OCE">OCE</option>
+        <option value="RU">RU</option>
+        <option value="TR">TR</option>
+      </select>
+      <input type="submit" value="Save region" />
+    </form>
+  </div>
+  <div class="error-team"></div>
+  <div class="team-adviser step-2">
+    <div class="manage-summoners">
+      <div class="row-input">
+        <input type="text" name="summoner1" placeholder="Summoner 1" data-position="1" /><button class="add-summoner">+</button><button class="remove-summoner">✘</button>
+      </div>
+      <div class="error-summoner-1"></div>
+      <div class="row-input">
+        <input type="text" name="summoner2" placeholder="Summoner 2" data-position="2" /><button class="add-summoner">+</button><button class="remove-summoner">✘</button>
+      </div>
+      <div class="error-summoner-2"></div>
+      <div class="row-input">
+        <input type="text" name="summoner3" placeholder="Summoner 3" data-position="3" /><button class="add-summoner">+</button><button class="remove-summoner">✘</button>
+      </div>
+      <div class="error-summoner-3"></div>
+      <div class="row-input">
+        <input type="text" name="summoner4" placeholder="Summoner 4" data-position="4" /><button class="add-summoner">+</button><button class="remove-summoner">✘</button>
+      </div>
+      <div class="error-summoner-4"></div>
+      <div class="row-input">
+        <input type="text" name="summoner5" placeholder="Summoner 5" data-position="5" /><button class="add-summoner">+</button><button class="remove-summoner">✘</button>
+      </div>
+      <div class="error-summoner-5"></div>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Summoner</th><th>Role</th><th>Champions</th><th>Use Case</th></tr>
+      </thead>
+      <tbody>
+        <tr style="display: none">
+          <td>Celousco</td>
+          <td>
+            <select class="role-summoner1">
+              <option value="toplaner">Top laner</option>
+              <option value="jungler">Jungler</option>
+              <option value="midlaner">Mid laner</option>
+              <option value="adclaner">Bot laner (ADC)</option>
+              <option value="supportlaner" selected>Bot laner (Support)</option>
+            </select>
+          </td>
+          <td><img src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/Sona.png" />Sona</td>
+          <td>
+            <select class="use-summoner1">
+              <option>Try hard</option>
+              <option>Training</option>
+              <option>New meta</option>
+            </select>
+          </td>
+        </tr>
+        {{ #each summoners }}
+          <tr>
+            <td>{{ summonerName }}</td>
+            <td>{{ summonerRole }}</td>
+            <td><img src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/{{ summonerChampionImage }}"/> {{ summonerChampion }}</td>
+            <td></td>
+          </tr>
+        {{ /each }}
+      </tbody>
+    </table>
+  </div>
+</template>

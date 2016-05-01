@@ -1,0 +1,23 @@
+.welcome {
+  border-radius: 2px;
+  padding: 10px;
+  margin: 10px 0 0 0;
+  text-align: left;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.welcome h4 {
+  margin: 7px 0 0 0;
+  color: #d5c295;
+  font-weight: 200;
+}
+
+.welcome p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.tiny_img {
+  height: 20px;
+  vertical-align: middle;
+}

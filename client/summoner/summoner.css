@@ -1,0 +1,228 @@
+.summoner-header {
+  background-color: rgba(15,15,15,0.9);
+  height: 50px;
+  border-bottom: 1px solid #d4af37;
+  padding: 0 20px;
+  line-height: 50px;
+  margin: 5px 0 0 0;
+  text-align: left;
+}
+
+.summoner-header h3{
+    margin: 0;
+    display: inline-block;
+}
+
+.summoner-header .region {
+  vertical-align: top;
+  margin: 10px;
+  padding: 0 5px;
+  border-radius: 2px;
+  height: 30px;
+  line-height: 30px;
+  background-color: #2c3e50;
+  display: inline-block;
+}
+
+.summoner-header .right {
+  float: right;
+}
+
+.summoner-header .right .total-points {
+  margin: 0;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.summoner-subheader {
+  margin: 0 0 10px 0;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.summoner-subheader ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  height: 35px;
+  display: inline-block;
+}
+
+.summoner-subheader ul li {
+  height: 25px;
+  line-height: 25px;
+  padding: 5px 10px;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 200ms linear 0s;
+}
+
+.summoner-subheader ul li:hover {
+  background-color: #2b2b2b;
+}
+
+.summoner-subheader ul li.selected, .summoner-subheader ul li.selected:hover {
+  background-color: rgba(83, 69, 22, 1);
+}
+
+.summoner-subheader .right {
+  float: right;
+  display: inline-block;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 10px;
+}
+
+.summoner-subheader .right p {
+  margin: 0;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.summoner-subheader .right select {
+  margin: 5px 0 5px 4px;
+  height: 25px;
+  background-color: #333;
+  color: #eee;
+  vertical-align: top;
+  border: 0;
+  padding: 0 5px;
+  outline: none;
+  border: 1px solid #d4af37;
+}
+
+.summoner-champions {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: rgba(15,15,15,0.9);
+}
+
+.summoner-champions h3 {
+  margin: 0 0 5px 0;
+  text-align: left;
+  font-weight: 200;
+}
+
+.summoner-champions h3 img {
+  vertical-align: middle;
+  margin: 0 5px 0 0;
+  height: 40px;
+}
+
+.summoner-champions .list {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0;
+  margin: 0 0 10px 0;
+  align-items: stretch;
+  list-style-type: none;
+}
+
+.summoner-champions .list li {
+  width: 146px;
+  height: 135px;
+  display: inline-block;
+  text-align: center;
+}
+
+.summoner-champions .list li img {
+  width: 70px;
+  height: 70px;
+}
+
+.summoner-champions .list li .infos {
+  line-height: 16px;
+}
+
+.summoner-champions .list li .infos h6 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.summoner-champions .list li .infos p {
+  font-size: 14px;
+  display: inline-block;
+  margin: 0;
+  width: 100%;
+}
+
+.summoner-champions .list li .infos p b {
+  color: #d4af37;
+  font-weight: 200;
+}
+
+.summoner-champions .list li .infos span {
+  margin: 2px 0 0 0;
+  display: inline-block;
+  background-color: #777;
+  color: #fcfcfc;
+  border-radius: 2px;
+  padding: 2px 4px;
+}
+
+.summoner-analysis {
+  margin: 0 0 10px 0;
+  display: inline-block;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.summoner-analysis table {
+  width: 100%;
+  max-width: 300px;
+  border-collapse: collapse;
+  margin: 10px;
+  display: inline-table;
+  border: 1px solid #2c3e50;
+  text-align: left;
+  vertical-align: top;
+}
+
+.summoner-analysis table thead {
+  background-color: #1c2e40;
+}
+
+.summoner-analysis table thead tr {
+  border-bottom: 1px solid #d4af37;
+}
+
+.summoner-analysis table thead tr th:first-child, .summoner-analysis table tbody tr td:first-child {
+  padding: 0 0 0 3px;
+}
+
+.summoner-analysis table tbody tr:not(:last-child) {
+  border-bottom: 1px solid #555;
+}
+
+.summoner-analysis table tbody tr td.Assassin {
+  color: #c0392b;
+}
+
+.summoner-analysis table tbody tr td.Fighter {
+  color: #d35400;
+}
+
+.summoner-analysis table tbody tr td.Mage {
+  color: #27ae60;
+}
+
+.summoner-analysis table tbody tr td.Tank {
+  color: #d5c295;
+}
+
+.summoner-analysis table tbody tr td.Support {
+  color: #2980b9;
+}
+
+.summoner-analysis table tbody tr td.Marksman {
+  color: #ffa800;
+}
+
+.summoner-analysis canvas {
+  margin: 15px 0;
+}
+
+.summoner-analysis .note {
+  width: 100%;
+  font-size: 12px;
+  display: block;
+}

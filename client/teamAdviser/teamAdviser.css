@@ -1,0 +1,124 @@
+.team-adviser {
+  margin: 10px 0 0 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.team-adviser.step-1 select {
+  height: 30px;
+  border: 1px solid #d4ae37;
+  background-color: #2b2b2b;
+  color: #fafafa;
+  outline: none;
+}
+
+.team-adviser.step-1 input[type="submit"] {
+  border: 0;
+  outline: none;
+  margin: 0 5px;
+  height: 30px;
+  padding: 0 7px;
+  background-color: #2980b9;
+  color: #fafafa;
+  border-radius: 2px;
+  font-size: 13px;
+}
+
+.team-adviser.step-2 {
+  display: none;
+}
+
+.team-adviser.step-2::after {
+  content: '';
+  height: 0;
+  width: 100%;
+  clear: both;
+  display: inline-block;
+}
+
+.team-adviser.step-2 .manage-summoners {
+  width: 300px;
+  float: left;
+  display: inline-block;
+}
+
+.team-adviser.step-2 .manage-summoners .row-input {
+  height: 40px;
+  line-height: 40px;
+}
+
+.team-adviser.step-2 .manage-summoners .row-input input {
+    height: 28px;
+    width: 200px;
+    line-height: 28px;
+    outline: none;
+    padding: 0 0 0 10px;
+    margin: 5px 0 5px 10px;
+    color: #fafafa;
+    transition: all 200ms linear 0s;
+    border: 1px solid #777;
+    background-color: #111;
+}
+
+.team-adviser.step-2 .manage-summoners .row-input input:focus {
+  background-color: transparent;
+  border: 1px solid #d4ae37;
+}
+
+.team-adviser.step-2 .manage-summoners .row-input button {
+  margin: 5px 0 5px 10px;
+  width: 30px;
+  height: 30px;
+  outline: none;
+  border: 0;
+  padding: 0 10px;
+}
+
+.team-adviser.step-2 .manage-summoners .row-input .add-summoner {
+  background-color: #8eb021;
+  color: #fafafa;
+  border-radius: 2px;
+}
+
+.team-adviser.step-2 .manage-summoners .row-input .remove-summoner {
+  background-color: #c0392b;
+  color: #fafafa;
+  border-radius: 2px;
+  display: none;
+}
+
+.team-adviser table img {
+  height: 35px;
+  margin: 2.5px 3px 2.5px 0;
+  vertical-align: middle;
+}
+
+.team-adviser table {
+  width: calc(100% - 300px);
+  min-width: 300px;
+  border-collapse: collapse;
+  display: inline-table;
+  border: 1px solid #2c3e50;
+  text-align: left;
+  vertical-align: top;
+}
+
+.team-adviser table thead {
+  background-color: #1c2e40;
+}
+
+.team-adviser table thead tr {
+  border-bottom: 1px solid #d4af37;
+}
+
+.team-adviser table tbody tr {
+  height: 40px;
+}
+
+.team-adviser table thead tr th:first-child, .team-adviser table tbody tr td:first-child {
+  padding: 0 0 0 5px;
+}
+
+.team-adviser table tbody tr:not(:last-child) {
+  border-bottom: 1px solid #555;
+}

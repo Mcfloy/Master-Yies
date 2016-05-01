@@ -1,0 +1,104 @@
+<template name="summoner">
+  {{ #if summonerName }}
+    <div class="summoner-header">
+      <h3>{{ summonerName }}</h3>
+      <p class="region">{{ region }}</p>
+      <div class="right">
+        <p class="total-points">{{ totalPoints }} Mastery Points</p>
+      </div>
+    </div>
+    <div class="summoner-subheader">
+      <ul>
+        <li id="go-champions">Champions</li>
+        <li id="go-analysis">Analysis</li>
+      </ul>
+      <div class="right">
+        <p>Sort champions by</p>
+        <select id="sort-by">
+          <option value="levels">levels</option>
+          <option value="tags">tags</option>
+        </select>
+      </div>
+    </div>
+    <div class="summoner-champions">
+      {{ #if sortByLevel }}
+        {{ #each levels }}
+          {{ #if enoughChampions "levels" }}
+            <h3><img src="/img/tier{{ this }}.png"/> Level {{ this }}</h3>
+            <ul class="list">
+              {{ #each summonerChampions "levels" }}
+                  <li>
+                    <img src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/{{ championImage }}"/>
+                    <div class="infos">
+                      <h6>{{ championName }}</h6>
+                      <p><b>{{ championPoints }}</b> points</p>
+                      {{ #each championTags }}
+                        <span>{{ this }}</span>
+                      {{ /each }}
+                    </div>
+                  </li>
+              {{ /each }}
+            </ul>
+          {{ /if }}
+        {{ /each }}
+      {{ else }}
+        {{ #each tags }}
+          {{ #if enoughChampions }}
+            <h3><img src="/img/{{ this.name }}.png"/> {{ this.name }}</h3>
+            <ul class="list">
+              {{ #each summonerChampions }}
+                  <li>
+                    <img src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/{{ championImage }}"/>
+                    <div class="infos">
+                      <h6>{{ championName }}</h6>
+                      <p><b>{{ championPoints }}</b> points</p>
+                      {{ #each championTags }}
+                        <span>{{ this }}</span>
+                      {{ /each }}
+                    </div>
+                  </li>
+              {{ /each }}
+            </ul>
+          {{ /if }}
+        {{ /each }}
+      {{ /if }}
+    </div>
+    <div class="summoner-analysis">
+      <h3>You are a {{ smart_role }}</h3>
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Mastery Points</th><th>Percentage</th></tr>
+        </thead>
+        <tbody>
+          {{ #each tags }}
+            <tr><td class="{{ name }}">{{ name }}</td><td>{{ points }}</td><td>{{ percentage_points }}%</td></tr>
+          {{ /each }}
+        </tbody>
+      </table>
+      <canvas id="graph1"></canvas>
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Champions</th><th>Percentage</th></tr>
+        </thead>
+        <tbody>
+          {{ #each tags }}
+            <tr><td class="{{ name }}">{{ name }}</td><td>{{ champions }}</td><td>{{ percentage_champions }}%</td></tr>
+          {{ /each }}
+        </tbody>
+      </table>
+      <canvas id="graph2"></canvas>
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Effectiveness</th><th>Global Percentage*</th></tr>
+        </thead>
+        <tbody>
+          {{ #each tags }}
+            <tr><td class="{{ name }}">{{ name }}</td><td>{{ effectiveness }}</td><td>{{ percentage_global }}% </td></tr>
+          {{ /each }}
+        </tbody>
+      </table>
+      <canvas id="graph3"></canvas>
+      <i class="note">* The global percentage does not take into account the effectiveness value. It's just the average of the two above percentages</i>
+    </div>
+  {{ /if }}
+</template>

@@ -1,0 +1,39 @@
+<template name="mainTemplate">
+  <head>
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <div id="container">
+    <h1><a href="/"><span style="color:#222">Master </span>Yi<span style="color:#222">es</span></a></h1>
+    <form class="search-summoner">
+      <a href="/team-adviser">Team Adviser</a>
+      <div class="row-input">
+        <input type="text" name="summoner" placeholder="Summoner's name" autocomplete="off" />
+        <select name="region" class="select-region">
+          <option value="BR">BR</option>
+          <option value="EUNE">EUNE</option>
+          <option value="EUW">EUW</option>
+          <option value="JP">JP</option>
+          <option value="KR">KR</option>
+          <option value="LAN">LAN</option>
+          <option value="LAS">LAS</option>
+          <option value="NA">NA</option>
+          <option value="OCE">OCE</option>
+          <option value="RU">RU</option>
+          <option value="TR">TR</option>
+        </select>
+      </div>
+      <input type="submit" name="submit" value="🔎" />
+    </form>
+    <div class="error">
+    </div>
+    <div class="loading">
+      <img src="http://i.imgur.com/QRUPiHQ.gif" />
+    </div>
+    {{ #if errorSearch }}
+      <div class="error">
+        Summoner not found
+      </div>
+    {{ /if }}
+    {{ > yield }}
+  </div>
+</template>
