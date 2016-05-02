@@ -37,8 +37,9 @@
 }
 
 .team-adviser.step-2 .manage-summoners {
-  width: 300px;
+  width: 210px;
   float: left;
+  text-align: left;
   display: inline-block;
 }
 
@@ -49,7 +50,7 @@
 
 .team-adviser.step-2 .manage-summoners .row-input input {
     height: 28px;
-    width: 200px;
+    width: 140px;
     line-height: 28px;
     outline: none;
     padding: 0 0 0 10px;
@@ -63,6 +64,11 @@
 .team-adviser.step-2 .manage-summoners .row-input input:focus {
   background-color: transparent;
   border: 1px solid #d4ae37;
+}
+
+.team-adviser.step-2 .manage-summoners .row-input input:disabled, .team-adviser.step-2 .manage-summoners .row-input button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
 }
 
 .team-adviser.step-2 .manage-summoners .row-input button {
@@ -94,7 +100,7 @@
 }
 
 .team-adviser table {
-  width: calc(100% - 300px);
+  width: calc(100% - 220px);
   min-width: 300px;
   border-collapse: collapse;
   display: inline-table;
@@ -109,6 +115,10 @@
 
 .team-adviser table thead tr {
   border-bottom: 1px solid #d4af37;
+}
+
+.team-adviser table thead tr th:first-child {
+  width: 110px;
 }
 
 .team-adviser table tbody tr {

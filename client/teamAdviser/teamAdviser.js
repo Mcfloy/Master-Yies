@@ -1,3 +1,7 @@
+Handlebars.registerHelper('addOne', function (number) {
+  return number + 1;
+})
+
 Template.teamAdviser.onRendered(function () {
   $('.loading').css('display', 'none');
   var roles = [];
@@ -155,17 +159,25 @@ Template.teamAdviser.events({
     event.preventDefault();
     var summoner = event.currentTarget.previousSibling.value,
         position = event.currentTarget.previousSibling.dataset.position;
-    console.log(`${summoner}, position ${position} a été ajouté`);
-    getRoles(summoner, position);
-    event.currentTarget.style.display = "none";
-    event.currentTarget.previousSibling.disabled = true;
-    event.currentTarget.nextSibling.style.display = "inline-block";
+    if (summoner.length !== 0) {
+      getRoles(summoner, position);
+      event.currentTarget.style.display = "none";
+      event.currentTarget.previousSibling.disabled = true;
+      event.currentTarget.nextSibling.style.display = "inline-block";
+      if (position < 5) {
+        position++;
+        var nextInput = $(`.manage-summoners input[data-position=${ position }]`);
+        if (nextInput.val().length === 0) {
+          nextInput.attr('disabled', false);
+          nextInput.next().attr('disabled', false);
+        }
+      }
+    }
   },
   'click .remove-summoner': function (event) {
     event.preventDefault();
     var summoner = event.currentTarget.previousSibling.previousSibling.value,
         position = event.currentTarget.previousSibling.previousSibling.dataset.position;
-    console.log(`${summoner}, position ${position} a été retiré`);
     removeRole(summoner, position);
     event.currentTarget.style.display = "none";
     event.currentTarget.previousSibling.previousSibling.disabled = false;
@@ -182,7 +194,7 @@ Template.teamAdviser.events({
 
 Template.teamAdviser.helpers({
   summoners: function () {
-    let summonerArray = [];
+    summonerArray = [];
     // Need to avoid conflict lanes in this helper
     lockedRoles = {"Top": 0, "Jungler": 0, "Mid": 0, "ADC": 0, "Support": 0};
     for (let i = 1; i <= 5; i++) {
@@ -193,13 +205,12 @@ Template.teamAdviser.helpers({
           if (lockedRoles[currentLane[0]] === 0) {
             lockedRoles[currentLane[0]] = 1;
             conflict = false;
-            summonerArray.push([Session.get(`summoner${i}-name`), currentLane]);
+            summonerArray.push([Session.get(`summoner${i}-name`), i, currentLane]);
             break;
           }
         }
-        console.log(conflict);
         if (conflict) {
-          console.log("ON A UN CONFLIT");
+          console.log("THERE'S A CONFLICT");
           summonerArray.push([Session.get(`summoner${i}-name`), Session.get(`summoner${i}`)]);
         }
       }
@@ -210,12 +221,18 @@ Template.teamAdviser.helpers({
     return this[0];
   },
   summonerRole: function () {
-    return this[1][0];
+    return Session.get(`summoner${this[1]}`);
+  },
+  role: function () {
+    return this[2][0];
+  },
+  summonerChampions: function () {
+    return this[2][1];
   },
   summonerChampionImage: function () {
-    return this[1][1][0].image;
+    return this.image;
   },
   summonerChampion: function () {
-    return this[1][1][0].name;
+    return this.name;
   }
 });

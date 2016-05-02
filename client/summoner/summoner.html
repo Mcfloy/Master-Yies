@@ -28,7 +28,7 @@
             <ul class="list">
               {{ #each summonerChampions "levels" }}
                   <li>
-                    <img src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/{{ championImage }}"/>
+                    <img class="chest-{{ chestGranted }}" src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/{{ championImage }}"/>
                     <div class="infos">
                       <h6>{{ championName }}</h6>
                       <p><b>{{ championPoints }}</b> points</p>
@@ -48,7 +48,7 @@
             <ul class="list">
               {{ #each summonerChampions }}
                   <li>
-                    <img src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/{{ championImage }}"/>
+                    <img class="chest-{{ chestGranted }}" src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/{{ championImage }}"/>
                     <div class="infos">
                       <h6>{{ championName }}</h6>
                       <p><b>{{ championPoints }}</b> points</p>

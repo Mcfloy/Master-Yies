@@ -130,6 +130,10 @@
   height: 70px;
 }
 
+.summoner-champions .list li img.chest-true {
+  border:2px solid #d4af37;
+}
+
 .summoner-champions .list li .infos {
   line-height: 16px;
 }
