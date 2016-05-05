@@ -1,8 +1,5 @@
-Handlebars.registerHelper('addOne', function (number) {
-  return number + 1;
-})
-
 Template.teamAdviser.onRendered(function () {
+  // Hide Katarina
   $('.loading').css('display', 'none');
   var roles = [];
   addRole = function (result, tag, lane) {
@@ -17,13 +14,6 @@ Template.teamAdviser.onRendered(function () {
     if (finalResult.length > 1)
       roles.push([lane, [Champions.findOne({id: finalResult[0].championId}), Champions.findOne({id: finalResult[1].championId}) ] ] );
   };
-  removeRole = function (summoner, position) {
-    Session.set(`summoner${position}-id`, undefined);
-    Session.set(`summoner${position}-name`, undefined);
-    Session.set(`summoner${position}`, undefined);
-    let counter = Session.get('team-length');
-    Session.set('team-length', counter - 1);
-  };
   getRoles = function (summoner, position) {
     roles = [];
     let region = Session.get('team-region');
@@ -32,10 +22,9 @@ Template.teamAdviser.onRendered(function () {
         $('.error-team').text(error.reason);
         $('.error-team').fadeIn();
       } else {
-        var result = result[Object.keys(result)[0]];
-        Session.set(`summoner${position}-id`, result.id);
-        Session.set(`summoner${position}-name`, result.name);
-        Meteor.call('summonerChampionsMasteries', result.id, region, function (error, result) {
+        let summoner = result[Object.keys(result)[0]];
+        Session.set(`summoner${position}-name`, summoner.name);
+        Meteor.call('summonerChampionsMasteries', summoner.id, region, function (error, result) {
           if (error) {
             $('.error-team').text(error.reason);
             $('.error-team').fadeIn();
@@ -73,22 +62,10 @@ Template.teamAdviser.onRendered(function () {
               dataGlobal.push([i, parseFloat(((data[i].percentage_points + data[i].percentage_champions) / 2).toFixed(2))]);
             }
             // Sorting the data by global percentage
-            dataGlobal.sort(function (a, b) {
+            array = dataGlobal.sort(function (a, b) {
               return a[1] < b[1];
             });
-            /*
-            // Add some flexibility on the algorithm
-            let flexibility = parseFloat( ( (dataGlobal[0][1] + dataGlobal[5][1]) / 2).toFixed(2) );
-            // Now determining if we use global percentage or efficiency
-            if (dataGlobal.filter(function (a) { return a[1] > flexibility; }).length < 4)
-              array = dataGlobal.filter(function (a) { return a[1] > flexibility; });
-            else {
-              // We need to recalcule the flexibility for efficiency
-              let flexibility = parseFloat( ( (dataEfficiency[0][1]) * 0.80).toFixed(2) );
-              array = dataEfficiency.filter(function (a) { return a[1] > flexibility; });
-            }
-            */
-            array = dataGlobal;
+
             // Sorting the ouput variable
             array.sort(function (a, b) {
               return a[1] < b[1];
@@ -151,13 +128,21 @@ Template.teamAdviser.onRendered(function () {
         });
       }
     });
-  }
+  };
+  removeRole = function (summoner, position) {
+    Session.set(`summoner${position}-id`, undefined);
+    Session.set(`summoner${position}-name`, undefined);
+    Session.set(`summoner${position}`, undefined);
+    let counter = Session.get('team-length');
+    Session.set('team-length', counter - 1);
+  };
+
 });
 
 Template.teamAdviser.events({
   'click .add-summoner': function (event) {
     event.preventDefault();
-    var summoner = event.currentTarget.previousSibling.value,
+    let summoner = event.currentTarget.previousSibling.value,
         position = event.currentTarget.previousSibling.dataset.position;
     if (summoner.length !== 0) {
       getRoles(summoner, position);
@@ -166,7 +151,7 @@ Template.teamAdviser.events({
       event.currentTarget.nextSibling.style.display = "inline-block";
       if (position < 5) {
         position++;
-        var nextInput = $(`.manage-summoners input[data-position=${ position }]`);
+        let nextInput = $(`.manage-summoners input[data-position=${ position }]`);
         if (nextInput.val().length === 0) {
           nextInput.attr('disabled', false);
           nextInput.next().attr('disabled', false);
@@ -176,7 +161,7 @@ Template.teamAdviser.events({
   },
   'click .remove-summoner': function (event) {
     event.preventDefault();
-    var summoner = event.currentTarget.previousSibling.previousSibling.value,
+    let summoner = event.currentTarget.previousSibling.previousSibling.value,
         position = event.currentTarget.previousSibling.previousSibling.dataset.position;
     removeRole(summoner, position);
     event.currentTarget.style.display = "none";

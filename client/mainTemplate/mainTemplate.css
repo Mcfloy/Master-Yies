@@ -130,3 +130,12 @@ body {
   background-color: #AAA;
   cursor: not-allowed;
 }
+
+footer a {
+  color: #2980b9;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

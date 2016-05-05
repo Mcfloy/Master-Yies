@@ -1,9 +1,3 @@
-Template.mainTemplate.helpers({
-  errorSearch: function () {
-    return Session.get('error-search');
-  }
-});
-
 Template.mainTemplate.events({
   'submit .search-summoner': function (event) {
     event.preventDefault();
@@ -26,9 +20,5 @@ Template.mainTemplate.events({
         location.href = `/${region}/summoner/${result[Object.keys(result)[0]].id}`;
       }
     });
-  },
-  'change .region': function (event) {
-    event.preventDefault();
-    Session.set('region', event.currentTarget.value);
   }
 });

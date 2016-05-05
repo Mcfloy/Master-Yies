@@ -29,11 +29,9 @@
     <div class="loading">
       <img src="http://i.imgur.com/QRUPiHQ.gif" />
     </div>
-    {{ #if errorSearch }}
-      <div class="error">
-        Summoner not found
-      </div>
-    {{ /if }}
     {{ > yield }}
+    <footer>
+      <p>All images belongs to Riot Games. Source code available <a href="https://github.com/Mcfloy/Master-Yies" target="_blank">here</a></p>
+    </footer>
   </div>
 </template>
