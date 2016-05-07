@@ -30,6 +30,7 @@ Template.summoner.onCreated(function () {
   // Autorun function for showing charts
   this.autorun(function () {
     if (Session.get('data-ready')) {
+      // We initialize local variables to the charts
       let dataChampPoints = [],
           dataChampNb = [],
           dataChampGlobal = [],
@@ -43,10 +44,12 @@ Template.summoner.onCreated(function () {
           total_points = 0,
           total_champions = 0,
           tags = Template.instance().tags.get();
+      // We sum up the "total" variables
       for (let i in tags) {
         total_points += tags[i].points;
         total_champions += tags[i].champions;
       }
+      // And now we have them we can put percentage datas into arrays
       for (let i in tags) {
         dataChampPoints.push(
           {
@@ -68,6 +71,7 @@ Template.summoner.onCreated(function () {
           label: tags[i].name
         });
       }
+      // Once the datas ready, we show them into charts
       let ctx = document.querySelector("#graph1").getContext("2d"),
           champChart = new Chart(ctx).Doughnut(dataChampPoints, {
             tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= Math.round((circumference / (Math.PI * 2)) * 100) %>%"
@@ -80,6 +84,8 @@ Template.summoner.onCreated(function () {
       champChart = new Chart(ctx).Doughnut(dataChampGlobal, {
         tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= Math.round((circumference / (Math.PI * 2)) * 100) %>%"
       });
+      // As this function is really fast, it's done before the page is fully rendered to the user
+      // So we put two instructions to hide the loading image and the analysis block
       $(".loading").css('display', 'none');
       $('.summoner-analysis').css('display', 'none');
     }
@@ -87,22 +93,28 @@ Template.summoner.onCreated(function () {
 });
 
 Template.summoner.helpers({
+  // Return the path of the champion's image.
   championImage: function () {
     return Champions.findOne({id: this.championId}) && Champions.findOne({id: this.championId}).image;
   },
+  // Return the name of the champion
   championName: function () {
       return Champions.findOne({id: this.championId}) && Champions.findOne({id: this.championId}).name;
   },
+  // Return the tags (roles) of the champion
   championTags: function () {
-    // We make somes operations
+    // We make some operations
     if (Champions.findOne({id: this.championId})) {
       let champTag = Champions.findOne({id: this.championId}).tags,
           tags = Template.instance().tags.get();
+      // For each champion's tags
       for (let j in champTag) {
+        // We'll add the champion and the number of mastery points into the "tags" variable
         for (let i in tags) {
           if (tags[i].name === champTag[j]) {
             let tempArray = Template.instance().arrayChamp.get();
             if ($.inArray(this.championId, tempArray) === -1) {
+              // We also add the mastery points to the total points, but we make sure to not add it twice
               let summonerTotalPoints = Session.get('summoner-total-points') + this.championPoints;
               tempArray.push(this.championId);
               Template.instance().arrayChamp.set(tempArray);
@@ -114,8 +126,10 @@ Template.summoner.helpers({
         }
       }
     }
+    // After this, we return the champion's tag.
     return Champions.findOne({id: this.championId}) && Champions.findOne({id: this.championId}).tags;
   },
+  // Return the effectiveness (percentage of points divided by the percentage of champion per roles);
   effectiveness: function () {
     let tempArray = Template.instance().arrayEffectiveness.get();
     if (tempArray) {
@@ -124,20 +138,26 @@ Template.summoner.helpers({
           tempArray[i].effectiveness = parseFloat(((this.points / total_points) / (this.champions / total_champions)).toFixed(2));
         }
       }
+      // Once the "tags" variable is full, we change the session variable (that is reactive) to display the charts
       if (this.name === "Marksman")
         Session.set('data-ready', true);
       return ((this.points / total_points) / (this.champions / total_champions)).toFixed(2);
     }
   },
-  enoughChampions: function (sortBy) {
+  // Return true if we have at least one champion for a level or a tag
+  enoughChampions: function () {
+    // If we sort by levels
     if (Session.get('sort-by') === "levels") {
       let level = this.toString();
+      // We filter the summoner's champions and return true if the number of champions that have a specific level is at least one
       return Session.get('summoner-champions').filter(function (node) {
         return node.championLevel == level;
       }).length > 0;
     }
     else {
+      // If we sort by tags
       let tag = this;
+      // We filter the summoner's champions, see if the tag asked is in it, and return true if there's at least one champion
       return Session.get('summoner-champions').filter(function (node) {
         let tempTags = Champions.findOne({id: node.championId}).tags;
         for (let j in tempTags) {
@@ -149,12 +169,15 @@ Template.summoner.helpers({
       }).length > 0;
     }
   },
+  // Function that returns the array of levels that can have champions.
   levels: function () {
     return [5, 4, 3, 2, 1];
   },
+  // Function that returns the percentage of champions per role
   percentage_champions: function () {
     let tags = Template.instance().tags.get();
     if (tags) {
+      // This is a global variable (accessible in the others helpers)
       total_champions = 0;
       for (let i of tags) {
         total_champions += i.champions;
@@ -162,9 +185,11 @@ Template.summoner.helpers({
       return ((this.champions / total_champions) * 100).toFixed(2);
     }
   },
+  // Function that returns the percentage of mastery points per role
   percentage_points: function () {
     let tags = Template.instance().tags.get();
     if (tags) {
+      // This is a global variable (accessible in the others helpers)
       total_points = 0;
       for (let i of tags) {
         total_points += i.points;
@@ -172,27 +197,42 @@ Template.summoner.helpers({
       return ((this.points / total_points) * 100).toFixed(2);
     }
   },
+  // Function that returns the average of the two previous percentages
   percentage_global: function () {
     let tempArray = Template.instance().arrayGlobalPercentages.get();
     if (tempArray) {
       for (let i of tempArray) {
         if (i.name === this.name) {
+          // total_points and total_champions are not local variables, so there's no problem to access to them.
+          // And because this function is called after percentage_points and percentage_champions, it's never undefined.
           i.percentage_global = parseFloat((((this.points / total_points) + (this.champions / total_champions)) / 2 * 100).toFixed(2));
         }
       }
       return (((this.points / total_points) + (this.champions / total_champions)) / 2 * 100).toFixed(2);
     }
   },
+  // Function that returns the region parameter in the URL
   region: function () {
     return Router.current().params.region;
   },
+  // The algorithm
   smart_role: function () {
+    // We need to have all the datas to begin
     if (Session.get('data-ready')) {
+      // Once it's ready, we initialize local variables and sort them
       let roles = [],
           tempArrayGlobalPercentages = Template.instance().arrayGlobalPercentages.get(),
           tempArrayEffectiveness = Template.instance().arrayEffectiveness.get();
       tempArrayGlobalPercentages.sort(function (a,b) { return a.percentage_global < b.percentage_global; });
       tempArrayEffectiveness.sort(function (a,b) { return a.effectiveness < b.effectiveness; });
+      /*
+      ** requirement is a variable to check if the summoner have a major lane or play on every lanes.
+      ** Here's an example : If you always play as a support, you should have a lot of mastery points and/or champions with the "support" tag
+      ** With this, it's easy to tell that you're a support
+      ** But if you play every lane, or worst : If you play Jungler, the algorithm can't determine your best lane
+      ** So we swap from global percentage to effectiveness, that will always tell you your lane (even if he's wrong, the algorithm need to tell your lane)
+      ** Keep in mind the following advice : The more you play on every lanes, the more the algorithm will be bad.
+      */
       let requirement = null;
       requirement = ((parseFloat(tempArrayGlobalPercentages[0].percentage_global) - parseFloat(tempArrayGlobalPercentages[5].percentage_global)) * 0.75);
       if (tempArrayGlobalPercentages.filter(function (a) { return a.percentage_global > requirement; }).length < 4)
@@ -201,6 +241,14 @@ Template.summoner.helpers({
         requirement = ((parseFloat(tempArrayEffectiveness[0].effectiveness) - parseFloat(tempArrayEffectiveness[5].effectiveness)) * 0.75);
         var array = tempArrayEffectiveness.filter(function (a) { return a.effectiveness > requirement; });
       }
+      // We filtered the data to get important roles, and put them into a variable.
+      // Now we're ready to tell to the summoner which lane he knows well.
+
+      /*
+      ** Obviously the algorithm is not perfect, and some improvements are required
+      ** But i don't think even Riot could improve the tags system as it is nowadays
+      ** I found some combinations to determine a jungler or a top laner, but it's experimental
+      */
       if (array[0].name === "Fighter")
           roles.push("Top laner");
       if (array[0].name === "Tank") {
@@ -216,6 +264,7 @@ Template.summoner.helpers({
         } else
           roles.push('Top laner');
       }
+      // As Assassin is a very very very common role, we need to ensure that the third role is not too far from the two first.
       if (array[0].name === "Assassin") {
         if (array[1] !== undefined) {
           if (array[1].name === "Fighter") {
@@ -236,6 +285,7 @@ Template.summoner.helpers({
         else
           roles.push("Jungler");
       }
+      // The other lanes below are easy to check
       if (array[0].name === "Mage") {
         if (array[1] !== undefined) {
           if (array[1].name === "Assassin")
@@ -254,9 +304,11 @@ Template.summoner.helpers({
       return roles;
     }
   },
+  // Function that returns the sort variable.
   sortByLevel: function () {
     return Session.get('sort-by') === "levels";
   },
+  // Function that returns summoner's champions by their levels or tags.
   summonerChampions: function () {
     if (Session.get('sort-by') === "levels") {
       let level = this.toString();
@@ -274,12 +326,15 @@ Template.summoner.helpers({
       });
     }
   },
+  // Function that returns the summoner's name
   summonerName: function () {
     return Session.get('summoner-name');
   },
+  // Function that returns the "tags" global variable
   tags: function () {
     return Template.instance().tags.get();
   },
+  // Function that returns the total mastery points of a summoner
   totalPoints: function () {
     if (Session.get('summoner-total-points') > 1000000)
       return (Session.get('summoner-total-points') / 1000000).toFixed(1) + "M";
@@ -290,10 +345,12 @@ Template.summoner.helpers({
   }
 });
 
+// I don't think it's very useful to tell you what those functions will do.
 Template.summoner.events({
   'change #sort-by': function (event, template) {
     event.preventDefault();
     Session.set('sort-by', event.currentTarget.value);
+    // We reset this variable, because if we don't it will add again the total points.
     Session.set('summoner-total-points', 0);
     Template.instance().arrayChamp.set([]);
   },

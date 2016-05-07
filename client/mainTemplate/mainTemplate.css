@@ -131,6 +131,18 @@ body {
   cursor: not-allowed;
 }
 
+footer {
+  background-color: rgba(0,0,0, 0.9);
+  margin: 5px 0;
+  padding: 10px 20px;
+  text-align: left;
+  font-size: 13px;
+}
+
+footer p:first-child {
+  margin: 0;
+}
+
 footer a {
   color: #2980b9;
   text-decoration: none;

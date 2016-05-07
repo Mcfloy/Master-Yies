@@ -21,25 +21,25 @@
   <div class="error-team"></div>
   <div class="team-adviser step-2">
     <div class="manage-summoners">
-      <div class="row-input">
+      <form id="summoner1" class="row-input">
         <input type="text" name="summoner1" placeholder="Summoner 1" data-position="1" /><button class="add-summoner">+</button><button class="remove-summoner">✘</button>
-      </div>
+      </form>
       <div class="error-summoner-1"></div>
-      <div class="row-input">
+      <form id="summoner2" class="row-input">
         <input type="text" name="summoner2" placeholder="Summoner 2" data-position="2" disabled/><button class="add-summoner" disabled>+</button><button class="remove-summoner">✘</button>
-      </div>
+      </form>
       <div class="error-summoner-2"></div>
-      <div class="row-input">
+      <form id="summoner3" class="row-input">
         <input type="text" name="summoner3" placeholder="Summoner 3" data-position="3" disabled/><button class="add-summoner" disabled>+</button><button class="remove-summoner">✘</button>
-      </div>
+      </form>
       <div class="error-summoner-3"></div>
-      <div class="row-input">
+      <form id="summoner4" class="row-input">
         <input type="text" name="summoner4" placeholder="Summoner 4" data-position="4" disabled/><button class="add-summoner" disabled>+</button><button class="remove-summoner">✘</button>
-      </div>
+      </form>
       <div class="error-summoner-4"></div>
-      <div class="row-input">
+      <form id="summoner5" class="row-input">
         <input type="text" name="summoner5" placeholder="Summoner 5" data-position="5" disabled/><button class="add-summoner" disabled>+</button><button class="remove-summoner">✘</button>
-      </div>
+      </form>
       <div class="error-summoner-5"></div>
     </div>
     <table>
@@ -61,5 +61,10 @@
         {{ /each }}
       </tbody>
     </table>
+    <div class="faq">
+      <ul>
+        <li><b>Why summoners change position ?</b><br>It happens when a summoner can't have lanes, it's automatic.</li>
+      </ul>
+    </div>
   </div>
 </template>

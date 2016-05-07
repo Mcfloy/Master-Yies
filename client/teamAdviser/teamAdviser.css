@@ -1,3 +1,11 @@
+.error-team {
+    background-color: rgba(0, 0, 0, 0.9);
+    margin: 10px 0 0 0;
+    padding: 5px;
+    color: #c0392b;
+    display: none;
+}
+
 .team-adviser {
   margin: 10px 0 0 0;
   padding: 10px;
@@ -43,6 +51,7 @@
   display: inline-block;
 }
 
+
 .team-adviser.step-2 .manage-summoners .row-input {
   height: 40px;
   line-height: 40px;
@@ -69,6 +78,11 @@
 .team-adviser.step-2 .manage-summoners .row-input input:disabled, .team-adviser.step-2 .manage-summoners .row-input button:disabled {
   background-color: #666;
   cursor: not-allowed;
+}
+
+.team-adviser.step-2 .manage-summoners .row-input input.locked {
+  background-color: rgba(83, 68, 22, 0.8);
+  border: 1px solid #d3ae37;
 }
 
 .team-adviser.step-2 .manage-summoners .row-input button {
@@ -131,4 +145,19 @@
 
 .team-adviser table tbody tr:not(:last-child) {
   border-bottom: 1px solid #555;
+}
+
+.team-adviser.step-2 .faq {
+  clear: both;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 14px;
+}
+
+.team-adviser.step-2 .faq ul {
+  padding: 0;
+  margin: 5px 0;
+  list-style: none;
 }

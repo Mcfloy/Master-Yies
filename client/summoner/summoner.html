@@ -23,10 +23,10 @@
     <div class="summoner-champions">
       {{ #if sortByLevel }}
         {{ #each levels }}
-          {{ #if enoughChampions "levels" }}
+          {{ #if enoughChampions }}
             <h3><img src="/img/tier{{ this }}.png"/> Level {{ this }}</h3>
             <ul class="list">
-              {{ #each summonerChampions "levels" }}
+              {{ #each summonerChampions }}
                   <li>
                     <img class="chest-{{ chestGranted }}" src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/{{ championImage }}"/>
                     <div class="infos">
