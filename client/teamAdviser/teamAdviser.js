@@ -53,6 +53,15 @@ Template.teamAdviser.onRendered(function () {
             }
           }
         }
+        // Displaying an error if the summoner is not eligible and stopping the function
+        if (total.points < 10000) {
+          $('.error-team').text(`This summoner is not eligible (${10000 - total.points} mastery points left)`);
+          $('.error-team').fadeIn();
+          $(`#summoner${position} input`).removeClass('locked').prop('disabled', false);
+          $(`#summoner${position} .add-summoner`).css('display', 'inline-block');
+          $(`#summoner${position} .remove-summoner`).css('display', 'none');
+          return false;
+        }
         // Calculating percentages
         for (let i in data) {
           data[i].percentage_points = parseFloat((data[i].points / total.points * 100).toFixed(2));

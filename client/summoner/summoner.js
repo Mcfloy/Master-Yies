@@ -169,9 +169,20 @@ Template.summoner.helpers({
       }).length > 0;
     }
   },
+  // Function that returns true if the total mastery points is higher than 10000
+  isEligible: function () {
+    points = 0;
+    for (let node of Session.get('summoner-champions')) {
+      points += node.championPoints;
+    }
+    return points >= 10000;
+  },
   // Function that returns the array of levels that can have champions.
   levels: function () {
     return [5, 4, 3, 2, 1];
+  },
+  masteryPointsLeftForEligibility: function () {
+    return 10000 - points;
   },
   // Function that returns the percentage of champions per role
   percentage_champions: function () {
@@ -235,7 +246,7 @@ Template.summoner.helpers({
       */
       let requirement = null;
       requirement = ((parseFloat(tempArrayGlobalPercentages[0].percentage_global) - parseFloat(tempArrayGlobalPercentages[5].percentage_global)) * 0.75);
-      if (tempArrayGlobalPercentages.filter(function (a) { return a.percentage_global > requirement; }).length < 4)
+      if (tempArrayGlobalPercentages.filter(function (a) { return a.percentage_global > requirement; }).length <= 4)
         var array = tempArrayGlobalPercentages.filter(function (a) { return a.percentage_global > requirement; });
       else {
         requirement = ((parseFloat(tempArrayEffectiveness[0].effectiveness) - parseFloat(tempArrayEffectiveness[5].effectiveness)) * 0.75);
@@ -291,7 +302,7 @@ Template.summoner.helpers({
           if (array[1].name === "Assassin")
             roles.push("Mid laner");
           else if (array[1].name === "Fighter")
-            roles.push("Jungler");
+            roles.push("Mid laner");
           else if (array[1].name === "Support")
             roles.push("Support");
         } else
